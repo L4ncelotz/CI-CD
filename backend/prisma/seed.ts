@@ -10,12 +10,12 @@ async function main() {
 
     const initialTasks = [
         {
-            title: 'Setup Project',
-            description: 'Initial project structure with Express and Quasar',
+            title: 'ชื่อ',
+            description: 'นายชยานันต์ หล้ากาศ',
         },
         {
-            title: 'Database Migration',
-            description: 'Connect to Supabase and push Prisma schema',
+            title: 'รหัสนศ',
+            description: '6604101403',
         },
         {
             title: 'Cloud Deployment',

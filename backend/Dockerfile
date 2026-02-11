@@ -28,7 +28,7 @@ ENV NODE_ENV=production
 RUN mkdir -p /app/logs && chown -R node:node /app
 
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm install --omit=dev
 
 # Copy built application
 COPY --from=builder --chown=node:node /app/dist ./dist

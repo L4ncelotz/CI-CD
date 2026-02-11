@@ -1,14 +1,14 @@
 // src/prisma.ts
-import 'dotenv/config';            // ให้ Prisma เห็น DATABASE_URL จาก .env
-import { PrismaClient } from '@prisma/client';
+import 'dotenv/config';
+import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '@prisma/client';
 
-// สร้าง adapter ต่อ PostgreSQL ผ่าน DATABASE_URL
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
-});
+const connectionString = process.env.DATABASE_URL;
 
-// ใช้ global เดิมสำหรับ dev (nodemon reload แล้วไม่สร้าง client ซ้ำ)
+const pool = new Pool({ connectionString });
+const adapter = new PrismaPg(pool);
+
 const globalForPrisma = globalThis as unknown as {
   prisma?: PrismaClient;
 };
@@ -16,7 +16,7 @@ const globalForPrisma = globalThis as unknown as {
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
-    adapter, // ✅ สำคัญ: บอก Prisma ให้ใช้ adapter นี้
+    adapter,
     log: ['query', 'info', 'warn', 'error'],
   });
 
